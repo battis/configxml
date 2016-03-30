@@ -1,5 +1,5 @@
 {
-    "name": "battis/config-xml-loader",
+    "name": "battis/configxml",
     "description": "Load a configuration XML file for quick use",
     "license": "LGPL-3.0",
     "authors": [
