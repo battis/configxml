@@ -1,0 +1,17 @@
+{
+    "name": "battis/config-xml-loader",
+    "description": "Load a configuration XML file for quick use",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Seth Battis",
+            "email": "seth@battis.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+	    "psr-4": {
+		    "Battis\\" : "src/"
+	    }
+    }
+}
