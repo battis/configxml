@@ -62,6 +62,17 @@ class ConfigXML {
 	}
 	
 	/**
+	 * How many matches are there for a query?
+	 * 
+	 * @param string $query XPath query
+	 *
+	 * @return int
+	 */
+	public function count($query) {
+		return $this->xpath((string) $query)->length;
+	}
+	
+	/**
 	 * Create an instance of an object with paramters from the configuration
 	 * 
 	 * @param string $class The class name (as in `mysqli::class` or
