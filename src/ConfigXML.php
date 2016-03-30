@@ -79,7 +79,7 @@ class ConfigXML {
 	 * @param string $class The class name (as in `mysqli::class` or
 	 *		`'\Battis\AppMetadata'
 	 * @param string $query XPath query
-	 * @param int $n Which match index from the XPath query to use (default: '0`)
+	 * @param int $n Which match index from the XPath query to use (default: `0`)
 	 *
 	 * @return mixed An instance of `$class` constructed from the nth match to
 	 *		`$query` 

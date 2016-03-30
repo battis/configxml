@@ -30,7 +30,8 @@ class ConfigXML {
 		if (realpath($configuration)) {
 			$configuration = file_get_contents($configuration);
 		}
-		$this->dom = DOMDocument::loadXML($configuration);
+		$this->dom = new DOMDocument();
+		$this->dom->loadXML($configuration);
 		$this->xpath = new DOMXPath($this->dom);
 	}
 	
@@ -43,7 +44,7 @@ class ConfigXML {
 	 *		if no matches found.
 	 */
 	public function toArray($query) {
-		$nodes = $this->xpath((string) $query);
+		$nodes = $this->xpath->query((string) $query);
 		if ($nodes->length) {
 			$result = array();
 			foreach($nodes as $node) {
@@ -62,12 +63,23 @@ class ConfigXML {
 	}
 	
 	/**
+	 * How many matches are there for a query?
+	 * 
+	 * @param string $query XPath query
+	 *
+	 * @return int
+	 */
+	public function count($query) {
+		return $this->xpath->query((string) $query)->length;
+	}
+	
+	/**
 	 * Create an instance of an object with paramters from the configuration
 	 * 
 	 * @param string $class The class name (as in `mysqli::class` or
 	 *		`'\Battis\AppMetadata'
 	 * @param string $query XPath query
-	 * @param int $n Which match index from the XPath query to use (default: '0`)
+	 * @param int $n Which match index from the XPath query to use (default: `0`)
 	 *
 	 * @return mixed An instance of `$class` constructed from the nth match to
 	 *		`$query` 
