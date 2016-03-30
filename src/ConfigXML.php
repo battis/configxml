@@ -43,7 +43,7 @@ class ConfigXML {
 	 *		if no matches found.
 	 */
 	public function toArray($query) {
-		$nodes = $this->xpath((string) $query);
+		$nodes = $this->xpath->query((string) $query);
 		if ($nodes->length) {
 			$result = array();
 			foreach($nodes as $node) {
@@ -69,7 +69,7 @@ class ConfigXML {
 	 * @return int
 	 */
 	public function count($query) {
-		return $this->xpath((string) $query)->length;
+		return $this->xpath->query((string) $query)->length;
 	}
 	
 	/**
