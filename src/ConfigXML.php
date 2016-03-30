@@ -30,7 +30,8 @@ class ConfigXML {
 		if (realpath($configuration)) {
 			$configuration = file_get_contents($configuration);
 		}
-		$this->dom = DOMDocument::loadXML($configuration);
+		$this->dom = new DOMDocument();
+		$this->dom->loadXML($configuration);
 		$this->xpath = new DOMXPath($this->dom);
 	}
 	
