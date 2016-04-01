@@ -13,6 +13,9 @@ use ReflectionClass;
  */
 class ConfigXML {
 	
+	const ATTRIBUTES = '@attributes';
+	const VALUE = '@value';
+	
 	/** @var DOMDocument The loaded configuration*/
 	private $dom;
 	
@@ -36,6 +39,13 @@ class ConfigXML {
 	}
 	
 	/**
+	 * @return boolean
+	 */
+	public function isXML() {
+		return is_a($this->dom, DOMDocument::class);
+	}
+	
+	/**
 	 * Extract an XPath query as an associative array
 	 * 
 	 * @param string $query XPath query
@@ -48,18 +58,79 @@ class ConfigXML {
 		if ($nodes->length) {
 			$result = array();
 			foreach($nodes as $node) {
-				$result[] = json_decode(
-					json_encode(
-						simplexml_load_string(
-							$this->dom->saveXML($node)
-						)
-					),
-					true
-				);
+				$result[$node->nodeName][] = static::DOMtoArray($node);
 			}
 			return $result;
 		}
 		return null;
+	}
+	
+	// based on http://www.akchauhan.com/convert-xml-to-array-using-dom-extension-in-php5/
+	private static function DOMtoArray($node) { 
+		$occurance = array();
+		$result = null;
+ 
+		if ($node->childNodes) {
+			foreach($node->childNodes as $child) {
+				if (isset($occurance[$child->nodeName])) {
+					$occurance[$child->nodeName]++;
+				} else {
+					$occurance[$child->nodeName] = 1;
+				}
+			}
+		}
+ 
+		if($node->nodeType == XML_TEXT_NODE || $node->nodeType == XML_CDATA_SECTION_NODE) { 
+			$result = html_entity_decode(
+				htmlentities(
+					(string) $node->nodeValue,
+					ENT_COMPAT,
+					'UTF-8'
+				),
+				ENT_COMPAT,
+				'ISO-8859-15'
+			);
+		} 
+		else {
+			if($node->hasChildNodes()){
+				$children = $node->childNodes;
+ 
+				for($i=0; $i<$children->length; $i++) {
+					$child = $children->item($i);
+ 
+					switch($child->nodeName) {
+						case '#cdata-section':
+						case '#text':
+							$text = static::DOMtoArray($child);
+	 
+							if (trim($text) != '') {
+								$result[self::VALUE] = static::DOMtoArray($child);
+							};
+							break;
+
+						default:
+							if($occurance[$child->nodeName] > 1) {
+								$result[$child->nodeName][] = static::DOMtoArray($child);
+							}
+							else {
+								$result[$child->nodeName] = static::DOMtoArray($child);
+							}
+					}
+				}
+			} 
+ 
+			if($node->hasAttributes()) { 
+				$attributes = $node->attributes;
+ 
+				if(!is_null($attributes)) {
+					foreach ($attributes as $key => $attr) {
+						$result[self::ATTRIBUTES][$attr->name] = $attr->value;
+					}
+				}
+			}
+		}
+ 
+		return $result;
 	}
 	
 	/**

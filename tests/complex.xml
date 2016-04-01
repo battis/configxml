@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<canvashack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/smtech/canvashack/develop/canvashack.xsd">
+	<title>Lock Notifications</title>
+	<id>lock-notifications</id>
+	<authors>
+		<author name="Seth Battis" email="SethBattis@stmarksschool.org"/>
+		<author name="Joseph Burnett" email="JosephBurnett@stmarksschool.org" url="http://stmarksschool.org"/>
+	</authors>
+	<abstract>Lock specific notification settings to (to their current state)</abstract>
+	<components>
+		<scripts>
+			<file path="lock-notifications.js.php"/>
+		</scripts>
+		<stylesheets>
+			<file path="lock-notifications.css"/>
+		</stylesheets>
+		<canvas>
+			<pages>
+				<include>
+					<page type="regex" match="%/profile/communication%"/>
+				</include>
+			</pages>
+			<dom>
+				<node event="load" method="lockNotifications()" selector="#notification-preferences"/>
+			</dom>
+		</canvas>
+	</components>
+	<config>
+		<option name="notification-list" type="array" description="Which notifications to lock"><![CDATA[a:2:{i:0;s:12:"announcement";i:1;s:20:"conversation_message";}]]></option>
+	</config>
+</canvashack>

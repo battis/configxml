@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<root a="Attribute 1" b="Attribute 2">
+	<child a="Attribute 3">
+		<leaf>Value A</leaf>
+	</child>
+	<child c="Attribute 3">
+		<leaf b="Attribute 2">Value B</leaf>
+		<leaf b="Attribute 3">Value C</leaf>
+	</child>
+</root>
