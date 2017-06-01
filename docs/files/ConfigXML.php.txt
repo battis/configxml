@@ -230,3 +230,4 @@ class ConfigXML
         return (new ReflectionClass($class))->newInstanceArgs($this->toArray($query)[$n]);
     }
 }
+

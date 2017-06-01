@@ -5,4 +5,4 @@
 
 Load a configuration XML file for quick use
 
-[Full API documentation](https://htmlpreview.github.io/?https://raw.githubusercontent.com/battis/configxml/master/doc/namespaces/Battis.html) in repo.
+[Full API documentation](https://battis.github.io/configxml/namespaces/Battis.html) in repo.

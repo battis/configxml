@@ -8,7 +8,6 @@
             "email": "seth@battis.net"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
 	    "psr-4": {
 		    "Battis\\" : "src/"
